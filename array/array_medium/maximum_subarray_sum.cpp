@@ -50,7 +50,7 @@ void maxSubarrayVraiation(vector<int> nums, int n) {
         }
         if(currSem < 0) {
             currSem = 0;
-            tempStart = i - 1;
+            tempStart = i + 1;
         }
     }
 
