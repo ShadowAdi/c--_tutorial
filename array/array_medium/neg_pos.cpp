@@ -42,7 +42,7 @@ int main() {
 
 	vector<int> A {1, 2, -4, -5, 3, 4};
 	int n = A.size();
-	RearrangebyVarietySignBrute(A, n);
+	RearrangebySignOptimal(A, n);
 	for(int i = 0; i < A.size(); i++) {
 		cout << A[i] << " ";
 	}
