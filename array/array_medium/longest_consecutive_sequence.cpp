@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <climits>
+#include <unordered_set>
 using namespace std;
 
 bool linearSearch(vector<int> arr, int target) {
@@ -30,30 +31,54 @@ int longestSuccessiveElementsBrute(vector<int> arr) {
 	return maxLongest;
 }
 
-
 int longestSuccessiveElementsBetter(vector<int> arr) {
-	int n = arr.size();
-	int maxLongest = 1;
-	int lastSmaller = INT_MIN;
 	sort(arr.begin(), arr.end());
-	int cnt = 0;
+	int n = arr.size();
+	int maxCnt = 1;
+	int lastSmaller = INT_MIN;
+	int currCnt = 0;
 	for(int i = 0; i < n; i++) {
 		if(arr[i] - 1 == lastSmaller) {
-			cnt += 1;
+			currCnt += 1;
 			lastSmaller = arr[i];
 		} else if(arr[i] != lastSmaller) {
-			cnt = 1;
+			currCnt = 1;
 			lastSmaller = arr[i];
 		}
-		maxLongest = max(maxLongest, cnt);
+		maxCnt = max(maxCnt, currCnt);
 	}
-	return maxLongest;
+	return maxCnt;
+}
+
+int longestSuccessiveElementsOptimal(vector<int> arr) {
+	int n = arr.size();
+	int longest = 1;
+	unordered_set<int> st;
+
+	for(int i = 0; i < n; i++) {
+		st.insert(arr[i]);
+	}
+
+	for(auto it : st) {
+		if(st.find(it - 1) != st.end()) {
+			int cnt = 1;
+			int x = it;
+			while(st.find(x+1)!=st.end())
+			{
+				x=x+1;
+				cnt+=1;
+			}
+			longest=max(longest,cnt);
+		}
+	}
+	return longest;
+
 }
 
 
 int main() {
 	vector<int> a = {100, 200, 1, 2, 3, 4};
-	int ans = longestSuccessiveElementsBetter(a);
+	int ans = longestSuccessiveElementsOptimal(a);
 	cout << "The longest consecutive sequence is " << ans << "\n";
 	return 0;
 }
