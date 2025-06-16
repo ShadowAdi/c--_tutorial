@@ -1,4 +1,5 @@
-#include <iostream>
+#include <bits/stdc++.h>
+
 using namespace std;
 
 int fibonanic(int n) {
@@ -21,7 +22,7 @@ int nCrBetter(int n, int c) {
 		res = res * (n - i);
 		res = res / (i + 1);
 	}
-	return res;
+	return (int)res;
 }
 
 
@@ -45,15 +46,33 @@ int pascalTriangleVariant2Optimal(int n) {
 	cout << ans << " "; // printing 1st element
 	for(int i = 1; i < n; i++) {
 		ans = ans * (n - i);
-		ans=ans/i;
-		cout<<ans<<" ";
+		ans = ans / i;
+		cout << ans << " ";
 	}
-	cout<<endl;
+	cout << endl;
 }
 
+vector<vector<int>> pascalTriangleVariant3Brute(int n) {
+	vector<vector<int>> ans;
+
+	for(int row = 1; row <= n; row++) {
+		vector<int> tempLst; 
+		for(int col = 1; col <= row; col++) {
+			tempLst.push_back(nCrBetter(row - 1, col - 1));
+		}
+		ans.push_back(tempLst);
+	}
+	return ans;
+}
 
 int main() {
 	int n = 5;
-	pascalTriangleVariant2Optimal(n);
+	vector<vector<int>> ans = pascalTriangleVariant3Brute(n);
+	for(auto it : ans) {
+		for(auto ele : it) {
+			cout << ele << " ";
+		}
+		cout << "\n";
+	}
 	return 0;
 }
